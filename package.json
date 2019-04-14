@@ -1,0 +1,17 @@
+{
+  "name": "divide-and-conquer",
+  "version": "1.0.0",
+  "description": "divide and conquer algorithm",
+  "main": "./backend/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --watch ./frontend/html --watch ./frontend/css --watch ./frontend/js ext html,js,css ./backend/server.js"
+  },
+  "author": "Menekou B. Coulibaly",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "p5": "^0.7.3",
+    "path": "^0.12.7"
+  }
+}
