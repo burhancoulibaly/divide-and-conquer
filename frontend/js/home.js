@@ -1,6 +1,7 @@
-const numPoints = 100;
+const numPoints = 20;
 let midPoint;
 let pointsArr = new Array();
+let closestPair = null;
 
 function preload(){
     //creating points
@@ -23,7 +24,8 @@ function preload(){
     //getting the closest pair amoungst the points array
     closestPair = closestUtil(pointsArr,pointsArr.length);
 
-    console.log("\n",closestPair);
+    console.log("\n",closestPair[0]);
+    console.log(closestPair[1]);
 }
 
 function setup(){
@@ -39,6 +41,12 @@ function draw(){
     });
     
     line(midPoint.x,0,midPoint.x,window.innerHeight);
+
+    stroke(244,122,158);
+    noFill();
+  
+    let pointOne = circle(closestPair[1][0].x,closestPair[1][0].y,closestPair[0]);
+    let pointTwo = circle(closestPair[1][1].x,closestPair[1][1].y,closestPair[0])
 
     noLoop();
 }
@@ -101,6 +109,7 @@ function bruteForce(points, length){
             if(minimum == null){
                 // console.log("p2",points[j]);
                 minimum = distance(points[i],points[j]);
+                minPoints = [points[i],points[j]]
             }else if(distance(points[i],points[j]) < minimum){
                 // console.log("p2",points[j]);
                 console.log("new minimum");
@@ -110,11 +119,11 @@ function bruteForce(points, length){
         }
     }
     console.log("final min: ",minimum);
-    return minimum;
+    return [minimum,minPoints];
 }
 
 //Checks if there are points that cross the midline that a closer than the best distance
-function stripClosest(strip,bestD){
+function stripClosest(strip,size,bestD){
     let min = bestD;
 
     //sorting the array by the y axis
@@ -122,15 +131,16 @@ function stripClosest(strip,bestD){
 
     //takes all points in the strip array and makes comparisons till there is a pair thats closer than the
     //closest distance(bestD)
-    for(var i = 0; i < strip.length; i++){
-        for(var j = i+1; j < strip.length && (strip[j].y - strip[i].y) < min; ++j){
+    for(var i = 0; i < size; i++){
+        for(var j = i+1; j < size && (strip[j].y - strip[i].y) < min; ++j){
             if(distance(strip[i],strip[j]) < min){
                 min = distance(strip[i],strip[j]);
+                minPoints = [strip[i],strip[j]];
             }
         }
     }
 
-    return min
+    return [min,minPoints];
 }
 
 //This function gets recursivly called, creating a tree, splitting the array till
@@ -165,7 +175,7 @@ function closestUtil(points, length){
     console.log("dRMin",dR);
 
     //the pair of points with the closest distance
-    let bestD = minimum(dL,dR);
+    let bestD = minimum(dL[0],dR[0]);
 
     strip = new Array(length);
     let j = 0;
@@ -179,5 +189,5 @@ function closestUtil(points, length){
     }
 
     //returns closest point passing in the best distance, and the strip array, and the size of it.
-    return minimum(bestD, stripClosest(strip, bestD));
+    return minimum(bestD, stripClosest(strip,j,bestD));
 }
