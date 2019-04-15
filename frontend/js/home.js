@@ -1,4 +1,4 @@
-const numPoints = 11;
+const numPoints = 5;
 let midPoint;
 let pointsArr = new Array();
 let closestPair = null;
@@ -19,11 +19,20 @@ function preload(){
     console.log(pointsArr);
 
     //creating midpoint for line to be drawn
-    midPoint = pointsArr[Math.round(pointsArr.length/2)];
+    if(pointsArr.length == 1){
+        midPoint = pointsArr[0];
+    }else{
+        midPoint = pointsArr[Math.round(pointsArr.length/2)];
+    }
+    
+    if(pointsArr.length == 1){
+        closestPair = pointsArr;
+    }else{
+        //getting the closest pair amoungst the points array
+        closestPair = closestUtil(pointsArr,pointsArr.length);
+    }
 
-    //getting the closest pair amoungst the points array
-    closestPair = closestUtil(pointsArr,pointsArr.length);
-
+    console.log(closestPair.length);
     console.log("\n",closestPair[0]);
     console.log(closestPair[1]);
 }
@@ -44,9 +53,13 @@ function draw(){
 
     stroke(244,122,158);
     noFill();
-  
-    let pointOne = circle(closestPair[1][0].x,closestPair[1][0].y,closestPair[0]);
-    let pointTwo = circle(closestPair[1][1].x,closestPair[1][1].y,closestPair[0])
+    
+    if(closestPair.length == 1){
+        let pointOne = circle(closestPair[0].x,closestPair[0].y,10);
+    }else{
+        let pointOne = circle(closestPair[1][0].x,closestPair[1][0].y,closestPair[0]);
+        let pointTwo = circle(closestPair[1][1].x,closestPair[1][1].y,closestPair[0])
+    }
 
     noLoop();
 }
