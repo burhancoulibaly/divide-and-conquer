@@ -1,4 +1,4 @@
-const numPoints = 100;
+const numPoints = 11;
 let midPoint;
 let pointsArr = new Array();
 let closestPair = null;
@@ -19,7 +19,7 @@ function preload(){
     console.log(pointsArr);
 
     //creating midpoint for line to be drawn
-    midPoint = pointsArr[(pointsArr.length/2)];
+    midPoint = pointsArr[Math.round(pointsArr.length/2)];
 
     //getting the closest pair amoungst the points array
     closestPair = closestUtil(pointsArr,pointsArr.length);
@@ -39,7 +39,7 @@ function draw(){
         this.stroke(255);
         this.point(point.x,point.y);
     });
-    
+
     line(midPoint.x,0,midPoint.x,window.innerHeight);
 
     stroke(244,122,158);
@@ -103,10 +103,8 @@ function bruteForce(points, length){
     console.log(length);
 
     for(var i = 0; i < length; i++){
-        console.log(i)
         // console.log("p1",points[i]);
         for(var j = i+1; j < length; j++){
-            console.log(j)
             if(minimum == null){
                 // console.log("p2",points[j]);
                 minimum = distance(points[i],points[j]);
