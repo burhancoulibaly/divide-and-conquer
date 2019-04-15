@@ -1,4 +1,4 @@
-const numPoints = 20;
+const numPoints = 100;
 let midPoint;
 let pointsArr = new Array();
 let closestPair = null;
@@ -99,6 +99,7 @@ function minimum(x,y){
 //calculating the distance between points in the points array, using the distance formula.
 function bruteForce(points, length){
     let minimum = null;
+    let minPoints = null;
     console.log(length);
 
     for(var i = 0; i < length; i++){
@@ -109,11 +110,12 @@ function bruteForce(points, length){
             if(minimum == null){
                 // console.log("p2",points[j]);
                 minimum = distance(points[i],points[j]);
-                minPoints = [points[i],points[j]]
+                minPoints = [points[i],points[j]];
             }else if(distance(points[i],points[j]) < minimum){
                 // console.log("p2",points[j]);
                 console.log("new minimum");
                 minimum = distance(points[i],points[j]);
+                minPoints = [points[i],points[j]];
                 console.log(minimum);
             }
         }
@@ -123,8 +125,9 @@ function bruteForce(points, length){
 }
 
 //Checks if there are points that cross the midline that a closer than the best distance
-function stripClosest(strip,size,bestD){
-    let min = bestD;
+function stripClosest(strip,closest,size){
+    let min = closest[0];
+    let minPoints = closest[1];
 
     //sorting the array by the y axis
     strip.sort(compareY);
@@ -177,6 +180,14 @@ function closestUtil(points, length){
     //the pair of points with the closest distance
     let bestD = minimum(dL[0],dR[0]);
 
+    let closest = null;
+    
+    if(bestD == dL[0]){
+        closest = dL;
+    }else{
+        closest = dR;
+    }
+
     strip = new Array(length);
     let j = 0;
 
@@ -189,5 +200,5 @@ function closestUtil(points, length){
     }
 
     //returns closest point passing in the best distance, and the strip array, and the size of it.
-    return minimum(bestD, stripClosest(strip,j,bestD));
+    return minimum(bestD, stripClosest(strip,closest,j));
 }
