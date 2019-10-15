@@ -4,8 +4,8 @@
   "description": "divide and conquer algorithm",
   "main": "./backend/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --watch ./frontend/html --watch ./frontend/css --watch ./frontend/js ext html,js,css ./backend/server.js"
+    "start": "nodemon --watch ./frontend/html --watch ./frontend/css --watch ./frontend/js ext html,js,css ./backend/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Menekou B. Coulibaly",
   "license": "ISC",
